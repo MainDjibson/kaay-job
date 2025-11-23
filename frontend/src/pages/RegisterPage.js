@@ -79,7 +79,7 @@ const RegisterPage = () => {
                 <div className="flex items-center space-x-2 flex-1">
                   <RadioGroupItem value="job_seeker" id="job_seeker" className="border-cyan-500/50" />
                   <Label htmlFor="job_seeker" className="text-gray-300 cursor-pointer">
-                    Chercheur d'emploi
+                    Chercheur d\'emploi
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2 flex-1">
