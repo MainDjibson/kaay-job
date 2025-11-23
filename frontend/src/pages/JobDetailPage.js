@@ -42,7 +42,7 @@ const JobDetailPage = () => {
       return;
     }
     if (user.role !== 'job_seeker') {
-      toast.error('Seuls les chercheurs d'emploi peuvent postuler');
+      toast.error('Seuls les chercheurs d\'emploi peuvent postuler');
       return;
     }
 
