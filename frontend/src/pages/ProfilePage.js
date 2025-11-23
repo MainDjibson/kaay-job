@@ -112,7 +112,7 @@ const ProfilePage = () => {
               <h1 className="text-3xl font-bold text-white mb-2">
                 {profile?.full_name || profile?.company_name || user?.email}
               </h1>
-              <p className="text-gray-400">{user?.role === 'job_seeker' ? 'Chercheur d'emploi' : 'Employeur'}</p>
+              <p className="text-gray-400">{user?.role === 'job_seeker' ? 'Chercheur d\'emploi' : 'Employeur'}</p>
             </div>
             <Button
               onClick={() => setEditing(!editing)}
