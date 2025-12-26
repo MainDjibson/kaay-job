@@ -67,6 +67,7 @@ const JobsPage = () => {
               <SelectItem value="CDI">CDI</SelectItem>
               <SelectItem value="CDD">CDD</SelectItem>
               <SelectItem value="Stage">Stage</SelectItem>
+              <SelectItem value="Alternance">Alternance</SelectItem>
               <SelectItem value="Freelance">Freelance</SelectItem>
             </SelectContent>
           </Select>
