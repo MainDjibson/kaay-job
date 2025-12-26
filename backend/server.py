@@ -48,6 +48,7 @@ class ContractType(str):
     CDI = "CDI"
     CDD = "CDD"
     STAGE = "Stage"
+    ALTERNANCE = "Alternance"
     FREELANCE = "Freelance"
     INTERIM = "Interim"
 
