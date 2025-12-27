@@ -711,6 +711,21 @@ async def delete_ad_banner(banner_id: str, current_user = Depends(get_current_us
     supabase.table("ad_banners").delete().eq("id", banner_id).execute()
     return {"message": "Bannière supprimée avec succès"}
 
+@api_router.patch("/banners/{banner_id}/toggle")
+async def toggle_banner_status(banner_id: str, current_user = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Seuls les admins peuvent modifier des bannières")
+    
+    # Get current status
+    banner = supabase.table("ad_banners").select("is_active").eq("id", banner_id).execute()
+    if not banner.data:
+        raise HTTPException(status_code=404, detail="Bannière non trouvée")
+    
+    new_status = not banner.data[0]["is_active"]
+    response = supabase.table("ad_banners").update({"is_active": new_status}).eq("id", banner_id).execute()
+    
+    return {"message": f"Bannière {'activée' if new_status else 'désactivée'}", "is_active": new_status}
+
 # ========== ADMIN ROUTES ==========
 
 @api_router.get("/admin/stats")
