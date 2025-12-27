@@ -38,8 +38,8 @@ const AboutPage = () => {
               <p className="text-gray-300 flex items-center gap-2">
                 <Mail className="h-5 w-5 text-cyan-400" />
                 <span className="font-medium">Email de contact :</span>
-                <a href="mailto:contact@kaay-job.sn" className="text-cyan-400 hover:text-cyan-300">
-                  contact@kaay-job.sn
+                <a href="mailto:djibson-consulting@gmail.com" className="text-cyan-400 hover:text-cyan-300">
+                  djibson-consulting@gmail.com
                 </a>
               </p>
             </div>
