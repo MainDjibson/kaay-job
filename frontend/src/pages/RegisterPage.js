@@ -76,18 +76,32 @@ const RegisterPage = () => {
                 className="flex gap-4"
                 data-testid="role-selector"
               >
-                <div className="flex items-center space-x-2 flex-1">
-                  <RadioGroupItem value="job_seeker" id="job_seeker" className="border-cyan-500/50" />
-                  <Label htmlFor="job_seeker" className="text-gray-300 cursor-pointer">
+                <label
+                  htmlFor="job_seeker"
+                  className={`flex-1 flex items-center space-x-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                    formData.role === 'job_seeker'
+                      ? 'bg-cyan-500/20 border-cyan-500 shadow-lg shadow-cyan-500/20'
+                      : 'bg-black/30 border-cyan-500/30 hover:border-cyan-500/50'
+                  }`}
+                >
+                  <RadioGroupItem value="job_seeker" id="job_seeker" className="border-cyan-500" />
+                  <span className={`font-medium ${formData.role === 'job_seeker' ? 'text-cyan-400' : 'text-gray-300'}`}>
                     Chercheur d\'emploi
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2 flex-1">
-                  <RadioGroupItem value="employer" id="employer" className="border-cyan-500/50" />
-                  <Label htmlFor="employer" className="text-gray-300 cursor-pointer">
+                  </span>
+                </label>
+                <label
+                  htmlFor="employer"
+                  className={`flex-1 flex items-center space-x-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                    formData.role === 'employer'
+                      ? 'bg-violet-500/20 border-violet-500 shadow-lg shadow-violet-500/20'
+                      : 'bg-black/30 border-violet-500/30 hover:border-violet-500/50'
+                  }`}
+                >
+                  <RadioGroupItem value="employer" id="employer" className="border-violet-500" />
+                  <span className={`font-medium ${formData.role === 'employer' ? 'text-violet-400' : 'text-gray-300'}`}>
                     Employeur
-                  </Label>
-                </div>
+                  </span>
+                </label>
               </RadioGroup>
             </div>
 
