@@ -64,24 +64,32 @@ const Header = () => {
             </Button>
           </Link>
           {user && (
-            <Link to="/messages" data-testid="messages-nav-link">
-              <Button
-                variant="ghost"
-                className="text-gray-300 hover:text-white hover:bg-cyan-500/10 relative"
-                size="sm"
-              >
-                <MessageSquare className="h-4 w-4 mr-2" />
-                Messages
-                {unreadCount > 0 && (
-                  <Badge
-                    variant="destructive"
-                    className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
-                  >
-                    {unreadCount}
-                  </Badge>
-                )}
-              </Button>
-            </Link>
+            <>
+              <Link to="/profile" data-testid="profile-nav-link">
+                <Button variant="ghost" className="text-gray-300 hover:text-white hover:bg-cyan-500/10" size="sm">
+                  <User className="h-4 w-4 mr-2" />
+                  Profil
+                </Button>
+              </Link>
+              <Link to="/messages" data-testid="messages-nav-link">
+                <Button
+                  variant="ghost"
+                  className="text-gray-300 hover:text-white hover:bg-cyan-500/10 relative"
+                  size="sm"
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Messages
+                  {unreadCount > 0 && (
+                    <Badge
+                      variant="destructive"
+                      className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                    >
+                      {unreadCount}
+                    </Badge>
+                  )}
+                </Button>
+              </Link>
+            </>
           )}
           <Link to="/about" data-testid="about-nav-link">
             <Button variant="ghost" className="text-gray-300 hover:text-white hover:bg-cyan-500/10" size="sm">
