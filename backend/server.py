@@ -678,6 +678,11 @@ async def get_ad_banners():
     response = supabase.table("ad_banners").select("*").execute()
     return response.data
 
+@api_router.get("/banners/active", response_model=List[AdBanner])
+async def get_active_banners():
+    response = supabase.table("ad_banners").select("*").eq("is_active", True).execute()
+    return response.data
+
 @api_router.get("/banners/random", response_model=AdBanner)
 async def get_random_banner():
     response = supabase.table("ad_banners").select("*").execute()
