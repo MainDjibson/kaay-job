@@ -36,41 +36,55 @@ const JobsPage = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      <AdBanner />
-      
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-violet-600 bg-clip-text text-transparent mb-8" data-testid="jobs-page-title">
           Offres d'emploi
         </h1>
 
         <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <Input
-            placeholder="Rechercher un poste..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="bg-gray-900 border-cyan-500/30 text-white"
-            data-testid="search-input"
-          />
-          <Input
-            placeholder="Localisation..."
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+            <Input
+              placeholder="Rechercher un poste..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-11 bg-gray-900 border-cyan-500/30 text-white placeholder:text-gray-500"
+              data-testid="search-input"
+            />
+          </div>
+          
+          <LocationAutocomplete
             value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="bg-gray-900 border-cyan-500/30 text-white"
-            data-testid="location-input"
+            onChange={setLocation}
+            className="bg-gray-900 border-cyan-500/30 text-white placeholder:text-gray-500"
           />
-          <Select value={contractType} onValueChange={setContractType}>
-            <SelectTrigger className="bg-gray-900 border-cyan-500/30 text-white">
-              <SelectValue placeholder="Type de contrat" />
-            </SelectTrigger>
-            <SelectContent className="bg-gray-900 border-cyan-500/30">
-              <SelectItem value=" ">Tous</SelectItem>
-              <SelectItem value="CDI">CDI</SelectItem>
-              <SelectItem value="CDD">CDD</SelectItem>
-              <SelectItem value="Stage">Stage</SelectItem>
-              <SelectItem value="Alternance">Alternance</SelectItem>
-              <SelectItem value="Freelance">Freelance</SelectItem>
-            </SelectContent>
-          </Select>
+
+          <div className="flex gap-2 flex-wrap">
+            <button
+              onClick={() => setContractType('')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                contractType === ''
+                  ? 'bg-white text-black'
+                  : 'bg-gray-900 text-white border border-cyan-500/30 hover:bg-white hover:text-black'
+              }`}
+            >
+              Tous
+            </button>
+            {TYPES_CONTRAT.map((type) => (
+              <button
+                key={type.value}
+                onClick={() => setContractType(type.value)}
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  contractType === type.value
+                    ? 'bg-white text-black'
+                    : 'bg-gray-900 text-white border border-cyan-500/30 hover:bg-white hover:text-black'
+                }`}
+                data-testid={`contract-type-${type.value}`}
+              >
+                {type.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="grid gap-6">
