@@ -1,0 +1,71 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                   📧 LISTE DES EMAILS - KAAY-JOB                             ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+👑 SUPER ADMIN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Email:           jiby.njaay@gmail.com
+Mot de passe:    M@indjibsoN7
+Rôle:            Administration complète
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🏢 EMPLOYEURS (Mot de passe pour tous: employeur123)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. recrutement@tech-dakar.sn          (Tech Dakar Solutions - Dakar)
+2. rh@afribank.sn                     (AfriBanque Sénégal - Dakar)
+3. jobs@sonacosmetics.sn              (Sona Cosmetics - Thiès)
+4. contact@agritech-solutions.sn      (AgriTech Solutions - Kaolack)
+5. recrutement@educare-africa.com     (EduCare Africa - Dakar)
+6. hr@constructbtp.sn                 (Construct BTP Sénégal - Mbour)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+👨‍💼 CANDIDATS (Mot de passe pour tous: candidat123)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. amadou.diallo@gmail.com           (Amadou Diallo - Développeur Full Stack)
+2. fatou.sall@gmail.com              (Fatou Sall - Responsable Marketing)
+3. ousmane.ndiaye@gmail.com          (Ousmane Ndiaye - Comptable)
+4. aissatou.ba@gmail.com             (Aissatou Ba - Designer UI/UX)
+5. moussa.fall@gmail.com             (Moussa Fall - Ingénieur Agronome)
+6. marieme.diop@gmail.com            (Marième Diop - Professeur d'Anglais)
+7. ibrahima.sarr@gmail.com           (Ibrahima Sarr - Chef de Chantier)
+8. awa.niang@gmail.com               (Awa Niang - Data Analyst)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+📋 COPIER-COLLER RAPIDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ADMIN:
+jiby.njaay@gmail.com
+M@indjibsoN7
+
+EMPLOYEURS (password: employeur123):
+recrutement@tech-dakar.sn
+rh@afribank.sn
+jobs@sonacosmetics.sn
+contact@agritech-solutions.sn
+recrutement@educare-africa.com
+hr@constructbtp.sn
+
+CANDIDATS (password: candidat123):
+amadou.diallo@gmail.com
+fatou.sall@gmail.com
+ousmane.ndiaye@gmail.com
+aissatou.ba@gmail.com
+moussa.fall@gmail.com
+marieme.diop@gmail.com
+ibrahima.sarr@gmail.com
+awa.niang@gmail.com
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 Pour créer tous ces comptes, exécutez:
+   cd /app/backend && python3 init_db_enriched.py
+
+📚 Documentation complète: /app/COMPTES_TEST.md
