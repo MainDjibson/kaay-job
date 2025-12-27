@@ -98,6 +98,10 @@ class ProfileBase(BaseModel):
     cv_url: Optional[str] = None
     skills: Optional[str] = None
     experience: Optional[str] = None
+    date_of_birth: Optional[str] = None
+    is_active: Optional[bool] = True
+    diplomas: Optional[str] = None
+    certifications: Optional[str] = None
 
 class Profile(ProfileBase):
     id: str
