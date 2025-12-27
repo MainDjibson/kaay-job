@@ -42,9 +42,12 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 };
 
 function AppContent() {
+  const { user } = useAuth();
+  
   return (
     <div className="flex flex-col min-h-screen bg-black">
       <Header />
+      {user && <AdBanner />}
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<LandingPage />} />
