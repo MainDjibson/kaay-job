@@ -489,3 +489,162 @@ logger = logging.getLogger(__name__)
 @app.on_event("shutdown")
 async def shutdown():
     client.close()
+
+# ==================== ROUTES RÉSEAU SOCIAL ====================
+
+# Posts
+class PostCreate(BaseModel):
+    content: str
+    media_url: Optional[str] = None
+
+@api_router.post("/social/posts")
+async def create_post(post_data: PostCreate, current_user = Depends(get_current_user)):
+    post = {
+        "_id": str(uuid.uuid4()),
+        "author_id": current_user["_id"],
+        **post_data.model_dump(),
+        "likes_count": 0,
+        "comments_count": 0,
+        "created_at": datetime.now(timezone.utc)
+    }
+    await db.social_posts.insert_one(post)
+    return serialize_doc(post)
+
+@api_router.get("/social/posts")
+async def get_posts(skip: int = 0, limit: int = 20):
+    posts = await db.social_posts.find().sort("created_at", -1).skip(skip).limit(limit).to_list(limit)
+    return serialize_doc(posts)
+
+@api_router.delete("/social/posts/{post_id}")
+async def delete_post(post_id: str, current_user = Depends(get_current_user)):
+    post = await db.social_posts.find_one({"_id": post_id})
+    if not post:
+        raise HTTPException(status_code=404, detail="Post non trouvé")
+    if post["author_id"] != current_user["_id"] and current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Non autorisé")
+    await db.social_posts.delete_one({"_id": post_id})
+    return {"message": "Post supprimé"}
+
+# Comments
+class CommentCreate(BaseModel):
+    post_id: str
+    content: str
+
+@api_router.post("/social/comments")
+async def create_comment(comment_data: CommentCreate, current_user = Depends(get_current_user)):
+    comment = {
+        "_id": str(uuid.uuid4()),
+        "post_id": comment_data.post_id,
+        "author_id": current_user["_id"],
+        "content": comment_data.content,
+        "likes_count": 0,
+        "created_at": datetime.now(timezone.utc)
+    }
+    await db.social_comments.insert_one(comment)
+    await db.social_posts.update_one({"_id": comment_data.post_id}, {"$inc": {"comments_count": 1}})
+    return serialize_doc(comment)
+
+@api_router.get("/social/comments/{post_id}")
+async def get_comments(post_id: str):
+    comments = await db.social_comments.find({"post_id": post_id}).sort("created_at", 1).to_list(100)
+    return serialize_doc(comments)
+
+@api_router.delete("/social/comments/{comment_id}")
+async def delete_comment(comment_id: str, current_user = Depends(get_current_user)):
+    comment = await db.social_comments.find_one({"_id": comment_id})
+    if not comment:
+        raise HTTPException(status_code=404, detail="Commentaire non trouvé")
+    if comment["author_id"] != current_user["_id"] and current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Non autorisé")
+    await db.social_comments.delete_one({"_id": comment_id})
+    await db.social_posts.update_one({"_id": comment["post_id"]}, {"$inc": {"comments_count": -1}})
+    return {"message": "Commentaire supprimé"}
+
+# Reactions
+class ReactionCreate(BaseModel):
+    target_id: str
+    target_type: str  # "post" or "comment"
+    reaction_type: str  # "like", "love", "support", "celebrate"
+
+@api_router.post("/social/reactions")
+async def toggle_reaction(reaction_data: ReactionCreate, current_user = Depends(get_current_user)):
+    # Check if reaction exists
+    existing = await db.social_reactions.find_one({
+        "user_id": current_user["_id"],
+        "target_id": reaction_data.target_id,
+        "target_type": reaction_data.target_type
+    })
+    
+    if existing:
+        # Remove reaction
+        await db.social_reactions.delete_one({"_id": existing["_id"]})
+        collection = db.social_posts if reaction_data.target_type == "post" else db.social_comments
+        await collection.update_one({"_id": reaction_data.target_id}, {"$inc": {"likes_count": -1}})
+        return {"action": "removed"}
+    else:
+        # Add reaction
+        reaction = {
+            "_id": str(uuid.uuid4()),
+            "user_id": current_user["_id"],
+            **reaction_data.model_dump(),
+            "created_at": datetime.now(timezone.utc)
+        }
+        await db.social_reactions.insert_one(reaction)
+        collection = db.social_posts if reaction_data.target_type == "post" else db.social_comments
+        await collection.update_one({"_id": reaction_data.target_id}, {"$inc": {"likes_count": 1}})
+        return {"action": "added", "reaction": serialize_doc(reaction)}
+
+@api_router.get("/social/reactions/{target_id}")
+async def get_reactions(target_id: str):
+    reactions = await db.social_reactions.find({"target_id": target_id}).to_list(100)
+    return serialize_doc(reactions)
+
+# ==================== ROUTES ADMIN ENRICHIES ====================
+
+@api_router.delete("/admin/users/{user_id}")
+async def admin_delete_user(user_id: str, current_user = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Accès réservé aux admins")
+    
+    # Delete user profile
+    await db.profiles.delete_one({"user_id": user_id})
+    # Delete user
+    await db.users.delete_one({"_id": user_id})
+    # Delete related data
+    await db.applications.delete_many({"candidate_id": user_id})
+    await db.job_offers.delete_many({"employer_id": user_id})
+    await db.social_posts.delete_many({"author_id": user_id})
+    await db.social_comments.delete_many({"author_id": user_id})
+    
+    return {"message": "Utilisateur supprimé avec succès"}
+
+@api_router.get("/admin/users")
+async def admin_get_users(current_user = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Accès réservé aux admins")
+    
+    users = await db.users.find({}, {"password": 0}).sort("created_at", -1).to_list(100)
+    return serialize_doc(users)
+
+# ==================== RÉFÉRENTIEL COMPÉTENCES ====================
+
+@api_router.get("/competences")
+async def get_competences():
+    competences = await db.competences_ref.find().sort("nom", 1).to_list(1000)
+    return serialize_doc(competences)
+
+@api_router.post("/competences")
+async def add_competence(nom: str, categorie: str = "Autre", current_user = Depends(get_current_user)):
+    # Check if exists
+    existing = await db.competences_ref.find_one({"nom": nom})
+    if existing:
+        return serialize_doc(existing)
+    
+    competence = {
+        "_id": str(uuid.uuid4()),
+        "nom": nom,
+        "categorie": categorie,
+        "created_at": datetime.now(timezone.utc)
+    }
+    await db.competences_ref.insert_one(competence)
+    return serialize_doc(competence)
