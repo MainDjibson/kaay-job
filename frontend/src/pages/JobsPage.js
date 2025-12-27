@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import LocationAutocomplete from '../components/LocationAutocomplete';
 import { Briefcase, MapPin, Clock, Search } from 'lucide-react';
 import api from '../lib/api';
-import AdBanner from '../components/AdBanner';
+import { TYPES_CONTRAT } from '../lib/constants';
 
 const JobsPage = () => {
   const [jobs, setJobs] = useState([]);
