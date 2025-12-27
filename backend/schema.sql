@@ -30,6 +30,10 @@ CREATE TABLE IF NOT EXISTS profiles (
     cv_updated_at TIMESTAMP WITH TIME ZONE,
     skills TEXT,
     experience TEXT,
+    date_of_birth DATE,
+    is_active BOOLEAN DEFAULT TRUE,
+    diplomas TEXT,
+    certifications TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
