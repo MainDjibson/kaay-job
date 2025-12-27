@@ -91,15 +91,15 @@ const AboutPage = () => {
               <p className="text-gray-300 flex items-center gap-2">
                 <Mail className="h-5 w-5 text-violet-400" />
                 <span className="font-medium">Email :</span>
-                <a href="mailto:pub@kaay-job.sn" className="text-violet-400 hover:text-violet-300">
-                  pub@kaay-job.sn
+                <a href="mailto:djibson-consulting@gmail.com" className="text-violet-400 hover:text-violet-300">
+                  djibson-consulting@gmail.com
                 </a>
               </p>
               <p className="text-gray-300 flex items-center gap-2">
                 <Phone className="h-5 w-5 text-violet-400" />
                 <span className="font-medium">Téléphone :</span>
-                <a href="tel:+221770000000" className="text-violet-400 hover:text-violet-300">
-                  +221 77 000 00 00
+                <a href="tel:+221778312002" className="text-violet-400 hover:text-violet-300">
+                  +221 77 831 20 02
                 </a>
               </p>
             </div>
