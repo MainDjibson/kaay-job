@@ -24,7 +24,7 @@ const AdBanner = () => {
 
   const loadBanners = async () => {
     try {
-      const response = await api.get('/banners');
+      const response = await api.get('/banners/active');
       setBanners(response.data);
     } catch (error) {
       console.error('Failed to load banners:', error);
