@@ -2,14 +2,14 @@ from fastapi import FastAPI, APIRouter, HTTPException, Depends, UploadFile, File
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
-from supabase import create_client, Client
+from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from typing import List, Optional
 import uuid
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, date
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 import random
@@ -17,10 +17,11 @@ import random
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# Supabase connection
-supabase_url = os.environ['SUPABASE_URL']
-supabase_key = os.environ['SUPABASE_KEY']
-supabase: Client = create_client(supabase_url, supabase_key)
+# MongoDB connection
+MONGO_URL = os.environ['MONGO_URL']
+DB_NAME = os.environ.get('DB_NAME', 'kaay_job')
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 # JWT configuration
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
