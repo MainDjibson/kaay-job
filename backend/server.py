@@ -187,6 +187,7 @@ class AdBannerCreate(BaseModel):
     telephone: str
     mail: str
     url: str
+    is_active: Optional[bool] = True
 
 class AdBanner(AdBannerCreate):
     id: str
