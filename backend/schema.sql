@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS ad_banners (
     telephone VARCHAR(50),
     mail VARCHAR(255),
     url TEXT,
+    is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
